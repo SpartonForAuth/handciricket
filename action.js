@@ -5,15 +5,19 @@ let bowls = [0,1,2,3,4,6];
 let target = 0;
 let innings = 1;
 
-let toss = Math.floor(Math.random() * 2);
-if(toss == 0){
-    isBatting = true;
-    $(".current-player").text("PLAYER");
-}else{
-    isBatting = false;
-    $(".current-player").text("CPU");
+let makeToss = ()=>{
+    let toss = Math.floor(Math.random() * 2);
+    if(toss == 0){
+        isBatting = true;
+        $(".current-player").text("PLAYER");
+    }else{
+        isBatting = false;
+        $(".current-player").text("CPU");
+    }
+    $(".target-area").addClass("hide-target");
 }
-$(".target-area").addClass("hide-target");
+
+makeToss();
 
 $(".clicking-balls").on("click",(event)=>{
     let current_score = event.target.innerText;
@@ -127,6 +131,26 @@ let displayResult= (status)=>{
 }
 
 $(".close-button").on("click", (e)=>{
-    location.reload();
-    return false;
+    newGame();
+    $(".final-result").css("display", "none");
+})
+
+let newGame= ()=>{
+    cpu = 0;
+    player = 0;
+    target = 0 ; 
+    innings = 1;
+    makeToss();
+    $(".batting-total-score").text("0");
+    $(".ball-hit").removeClass("player-style");
+    $(".ball-throw").removeClass("player-style");
+    $(".batting-hit").text("");
+    $(".bowling-hit").text("");
+    $(".batting-person").text("");
+    $(".bowling-person").text("");
+    
+}
+
+$(".restart-icon").on("click" , (e)=>{
+    newGame();
 })
